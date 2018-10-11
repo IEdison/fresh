@@ -1,0 +1,79 @@
+
+{% extends 'base_main.html' %}
+
+{% block content %}
+    <section class="rt_wrap content mCustomScrollbar">
+        <div class="rt_content">
+            <div class="page_title">
+                <h2 class="fl">商品列表</h2>
+                <a href="{% url 'goods:goods_add' %}" class="fr top_rt_btn add_icon">添加商品</a>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>缩略图</th>
+                    <th>产品名称</th>
+                    <th>商品类型</th>
+                    <th>货号</th>
+                    <th>市场单价</th>
+                    <th>本店单价</th>
+                    <th>库存</th>
+                    <th>详情</th>
+                    <th>操作</th>
+                </tr>
+                {% for good in page %}
+                    <tr>
+                        <td class="center"><img src="/media/{{ good.goods_front_image }}" width="50" height="50" alt="" /></td>
+                        <td class="center">{{ good.name }}</td>
+                        <td class="center">
+                            {% for type in category_types %}
+                                {% ifequal good.category.category_type type.0 %}
+                                    {{ type.1 }}
+                                {% endifequal %}
+                            {% endfor %}
+                        </td>
+                        <td class="center">{{ good.goods_sn }}</td>
+                        <td class="center"><strong class="rmb_icon">{{ good.market_price }}</strong></td>
+                        <td class="center"><strong class="rmb_icon">{{ good.shop_price }}</strong></td>
+                        <td class="center">{{ good.goods_nums }}</td>
+                        <td class="center">
+                            <a href="{% url 'goods:goods_desc' good.id %}">{{ good.name }}描述</a>
+                        </td>
+                        <td class="center">
+                            <a href="{% url 'goods:goods_edit' good.id %}" title="编辑" class="link_icon">&#101;</a>
+                            <a onclick="goods_delete({{ good.id }})" title="删除" class="link_icon">&#100;</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% csrf_token %}
+            <script>
+                function goods_delete(id){
+                    var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+                    $.ajax({
+                        url: '/goods/goods_delete/' + id + '/',
+                        type:'POST',
+                        dataType:'json',
+                        headers:{'X-CSRFToken': csrf},
+                        success:function(data){
+                            if(data.code == '200'){
+                                location.href = '/goods/goods_list/'
+                            }
+                        },
+                        error: function(data){
+                            alert('请求失败')
+                        }
+                    })
+                }
+            </script>
+            <aside class="paging">
+                <a>当前{{ page.number }}页</a>
+                <a href="{% url 'goods:goods_list' %}">第一页</a>
+                    {% for i in page.paginator.page_range %}
+                        <a href="{% url 'goods:goods_list' %}?page={{ i }}">{{ i }}</a>
+                    {% endfor %}
+                <a href="{% url 'goods:goods_list' %}?page={{ page.paginator.num_pages }}">最后一页</a>
+            </aside>
+        </div>
+    </section>
+
+{% endblock %}

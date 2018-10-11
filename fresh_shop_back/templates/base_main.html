@@ -1,0 +1,54 @@
+
+{% extends 'base.html' %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block js %}
+    {% load static %}
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+    {% load static %}
+    <header>
+        <h1><img src="{% static 'images/admin_logo.png'%}"/></h1>
+        <ul class="rt_nav">
+            <li><a href="/" target="_blank" class="website_icon">站点首页</a></li>
+            <li><a href="#" class="set_icon">账号设置</a></li>
+            <li><a href="login.html" class="quit_icon">安全退出</a></li>
+        </ul>
+    </header>
+{% endblock %}
+
+{% block aside %}
+    <aside class="lt_aside_nav content mCustomScrollbar">
+        <h2><a href="">商城后台菜单栏</a></h2>
+        <ul>
+            <li>
+                <dl>
+                    <dt>商品管理</dt>
+                    <!--当前链接则添加class:active-->
+                    <dd><a href="{% url 'goods:goods_category_list' %}">商品分类</a></dd>
+                    <dd><a href="{% url 'goods:goods_list' %}">商品列表</a></dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>订单管理</dt>
+                    <dd><a href="{% url 'orders:order_list' %}">订单列表</a></dd>
+                </dl>
+            </li>
+            <li>
+                    <dl>
+                        <dt>用户管理</dt>
+                        <dd><a href="user_list.html">用户列表</a></dd>
+                    </dl>
+                </li>
+        </ul>
+    </aside>
+{% endblock %}
+

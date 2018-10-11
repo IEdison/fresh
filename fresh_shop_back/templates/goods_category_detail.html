@@ -1,0 +1,44 @@
+
+{% extends 'base_main.html' %}
+
+{% block content %}
+    <section class="rt_wrap mCustomScrollbar">
+
+        <div class="rt_content">
+            <div class="page_title">
+                <h2 class="fl">商品分类详情</h2>
+                <a class="fr top_rt_btn" href="goods_category_list.html">返回商品分类列表</a>
+            </div>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <section>
+                    <ul class="ulColumn2">
+                        <li>
+                            <span class="item_name" style="width:120px;">商品分类名称：</span>
+                                {% for type in categorys_types %}
+                                    {% ifequal type.0 category.id %}
+                                        {{ type.1 }}
+                                    {% endifequal %}
+                                {% endfor %}
+                        </li>
+
+                        <li>
+                            <span class="item_name" style="width:120px;">上传商品分类首图：</span>
+
+                                <img src="/media/{{ category.category_front_image }}">
+
+                            <label class="uploadImg">
+                                 <input type="file" name="category_front_image"/>
+                                 <span>上传图片</span>
+                            </label>
+                        </li>
+                        <li>
+                            <span class="item_name" style="width:120px;"></span>
+                            <input type="submit" class="link_btn"/>
+                        </li>
+                    </ul>
+                </section>
+            </form>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,39 @@
+
+{% extends 'base_main.html' %}
+
+
+{% block content %}
+    <section class="rt_wrap content mCustomScrollbar">
+        <div class="rt_content">
+            <div class="page_title">
+                <h2 class="fl">商品分类列表</h2>
+                <a href="goods_category_detail.html" class="fr top_rt_btn add_icon">添加商品</a>
+            </div>
+            <table class="table">
+                <tr>
+                    <th>缩略图</th>
+                    <th>类型</th>
+                    <th>操作</th>
+                </tr>
+                {% for category in categorys %}
+                    <tr>
+                        <td class="center">
+                            <img src="/media/{{ category.category_front_image }}" width="50" height="50" alt="" />
+                        </td>
+                        <td class="center">
+                            {% for type in category_types %}
+                                {% ifequal category.category_type type.0 %}
+                                    {{ type.1 }}
+                                {% endifequal %}
+                            {% endfor %}
+                        </td>
+                        <td class="center">
+                            <a href="{% url 'goods:goods_category_edit' category.id %}" title="编辑" class="link_icon">&#101;</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+
+{% endblock %}

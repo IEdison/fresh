@@ -1,0 +1,49 @@
+
+{% extends 'base_main.html' %}
+
+
+{% block content %}
+
+<section class="rt_wrap content mCustomScrollbar">
+    <div class="rt_content">
+        <div class="page_title">
+            <h2 class="fl">订单列表</h2>
+        </div>
+        <table class="table">
+            <tr>
+                <th>订单编号</th>
+                <th>收件人</th>
+                <th>联系电话</th>
+                <th>收件人地址</th>
+                <th>订单金额</th>
+                <th>配送方式</th>
+                <!--<th>操作</th>-->
+            </tr>
+            {% for order_info in page %}
+                <tr>
+                    <td class="center">{{ order_info.order_sn|slice:"20" }}</td>
+                    <td>{{ order_info.signer_name }}</td>
+                    <td>{{ order_info.signer_mobile }}</td>
+                    <td>
+                        <address>{{ order_info.address }}</address>
+                    </td>
+                    <td class="center"><strong class="rmb_icon">{{ order_info.order_mount }}</strong></td>
+                    <td class="center">申通快递</td>
+                    <!--<td class="center">-->
+                        <!--<a href="#" title="查看订单" class="link_icon" target="_blank">&#118;</a>-->
+                    <!--</td>-->
+                </tr>
+            {% endfor %}
+        </table>
+        <aside class="paging">
+            <a>当前{{ page.number }}页</a>
+            <a href="{% url 'orders:order_list' %}">第一页</a>
+            {% for i in page.paginator.page_range %}
+                <a href="{% url 'orders:order_list' %}?page={{ i }}"> {{ i }} </a>
+            {% endfor %}
+            <a href="{% url 'orders:order_list' %}?page={{ page.paginator.num_pages }}">最后一页</a>
+        </aside>
+    </div>
+</section>
+
+{% endblock %}

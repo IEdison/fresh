@@ -1,0 +1,85 @@
+
+{% extends 'base_main.html' %}
+
+{% block content %}
+    <section class="rt_wrap mCustomScrollbar">
+
+        <div class="rt_content">
+            <div class="page_title">
+                <h2 class="fl">商品详情</h2>
+                <a class="fr top_rt_btn" href="/goods/goods_list/">返回商品列表</a>
+            </div>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <section>
+                    <ul class="ulColumn2">
+                        <li>
+                            <span class="item_name" style="width:120px;">商品名称：</span>
+                            <input type="text" name="name" value="{{ goods.name }}" class="textbox textbox_295" placeholder="商品名称..."/>
+
+                        </li>
+                        <li>
+                            <span class="item_name" style="width:120px;">商品货号：</span>
+                            <input type="text" name="goods_sn" value="{{ goods.goods_sn }}"  class="textbox" placeholder="商品货号..."/>
+
+                        </li>
+                        <li>
+                            <span class="item_name" style="width:120px;">分类：</span>
+                            <select class="select" name="category">
+                                {% for type in category_types %}
+                                    <option value="{{ type.0 }}"
+                                            {% ifequal type.0 goods.category.category_type %}
+                                                selected="selected"
+                                            {% endifequal %}>
+                                        {{ type.1 }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+
+                        </li>
+                        <li>
+                            <span class="item_name" style="width:120px;">商品库存：</span>
+                            <input type="text" name="goods_nums" value="{{ goods.goods_nums }}"  class="textbox textbox_295" placeholder="商品库存..."/>
+
+                        </li>
+                        <li>
+                            <span class="item_name" style="width:120px;">市场价格：</span>
+                            <input type="text" name="market_price" value="{{ goods.market_price }}" class="textbox textbox_295" placeholder="市场价格..."/>
+
+                        </li>
+                        <li>
+                            <span class="item_name" style="width:120px;">本店价格：</span>
+                            <input type="text" name="shop_price" value="{{ goods.shop_price }}" class="textbox textbox_295" placeholder="本店价格..."/>
+
+                        </li>
+                        <li>
+                            <span class="item_name" style="width:120px;">商品简短描述：</span>
+                            <input type="text" name="goods_brief" value="{{ goods.goods_brief }}" class="textbox textbox_295" placeholder="商品简短描述..."/>
+
+                        </li>
+                        <li>
+                            <span class="item_name" style="width:120px;">上传商品首图：</span>
+                            <img src="/media/{{ goods.goods_front_image }}">
+                            <label class="uploadImg">
+                                 <input type="file" name="goods_front_image"/>
+                                 <span>上传图片</span>
+                            </label>
+                        </li>
+                        <!--<li>-->
+                            <!--<span class="item_name" style="width:120px;">产品详情：</span>-->
+
+                            <!--<textarea id="editor_id" name="content" style="width:700px;height:300px;">-->
+                                <!--&lt;strong&gt;HTML内容&lt;/strong&gt;-->
+                            <!--</textarea>-->
+                        <!--</li>-->
+                        <li>
+                            <span class="item_name" style="width:120px;"></span>
+                            <input type="submit" class="link_btn"/>
+                        </li>
+                    </ul>
+                </section>
+            </form>
+        </div>
+    </section>
+
+{% endblock %}
